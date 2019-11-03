@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>运算基础面板</title>
+</head>
+
+<body>
+
+
+
+
+	<div class="history" id="history" style="float:left; width:30%">
+		<span> </span>
+	</div>
+	
+	<div class="sun" id="sun" style="float:left; width:70%">
+		<div class="canvas_container" id="canvas_container">
+			<canvas id="canvas" width="800" height="500">
+			
+			<style>
+			
+			*{padding:0;margin:0;}
+			
+			body{background: #ccc;}
+			
+			canvas{
+			
+			background: #fff;margin: 50px 10px;
+			
+			}
+			
+			input{
+			
+			display: inline-block;
+			
+			width: 80px;height:30px;cursor: pointer;margin-left: 10px; }
+			
+			</style>
+			
+			</canvas>
+		</div>
+		
+		<div class="buttons" id="buttons">
+		  <p>
+			<input name=" button" type=" button"  id="red" value="红画笔" />
+			<input name=" button2" type=" button"  id="green" value="绿画笔" />
+			<input name=" button2" type=" button"  id="blue" value="蓝画笔" />
+			<input name=" button2" type=" button"  id="default" value="重置颜色" />
+			<input name=" button2" type=" button"  id="clear" value="清除画布" />
+		  </p>
+		</div>
+		<script>
+
+	window.onload=function(){
+	
+		var canvas=document.getElementById("canvas");
+		
+		var canvass=document.getElementById("canvas");
+		
+		var ctx=canvass.getContext("2d");
+		
+		
+		
+		var oInput=document.getElementsByTagName("input");
+		
+		for(var i=0;i<oInput.length;i++){
+		
+		oInput[i].onclick=function(){
+		
+		var ID=this.getAttribute("id");
+		
+		switch(ID){
+		
+		case'red':
+		
+		ctx.strokeStyle='red';
+		
+		break;
+		
+		case'green':
+		
+		ctx.strokeStyle='green';
+		
+		break;
+		
+		case'blue':
+		
+		ctx.strokeStyle='blue';
+		
+		break;
+		
+		case'default':
+		
+		ctx.strokeStyle='black';
+		
+		break;
+		
+		case'clear':
+		
+		ctx.clearRect(0,0,canvas.clientWidth,canvas.clientHeight);
+		
+		break;
+		
+		}
+		
+		}
+		
+		}
+		
+		draw();
+		
+		function draw(){
+		
+		canvas.onmousedown=function(ev){
+		
+		var ev =ev||event;
+		
+		ctx.beginPath();
+		
+		ctx.moveTo(ev.clientX-canvas.offsetLeft,ev.clientY-canvas.offsetTop);
+		
+		document.onmousemove=function(ev){
+		
+		var ev =ev||event;
+		
+		ctx.lineTo(ev.clientX-canvas.offsetLeft,ev.clientY-canvas.offsetTop);
+		
+		ctx.stroke();
+		
+		}
+		
+		document.onmouseup=function(ev){
+		
+		document.onmousemove=document.onmouseup=null;
+		
+		ctx.closePath();
+		
+		 }
+		
+		}
+		
+		}
+		
+	}
+
+</script>
+		
+	</div>
+
+	
+	
+</div>
+</body>
+
+</html>
