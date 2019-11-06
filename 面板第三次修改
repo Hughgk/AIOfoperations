@@ -1,0 +1,43 @@
+$(function () {
+            $("#submit").click(function (event) {
+                var box = document.getElementById('box');
+                var context = box.getContext('2d');
+                var imgData = context.getImageData(0, 0, box.width, box.height).data;
+                $.post('get_result', {"img_data": imgData.toLocaleString()}, function (json, textStatus) {
+                    {#$("#result").text(json["status"])#}
+                    $("#result").append("<p>" + json["status"] + "<\p>");
+                });
+            })
+        });
+
+$(function () {
+            $("#clear").click(function (event) {
+                var box = document.getElementById('box');
+                var context = box.getContext('2d');
+                context.fillStyle = "#000000";
+                context.beginPath();
+                context.fillRect(0, 0, box.width, box.height);
+                context.closePath();
+            })
+        });
+
+var box = document.getElementById('box');
+    var oc = box.getContext('2d');
+
+    oc.lineWidth = 4;
+    box.onmousedown = function (e) {
+        e = e || window.event;
+        var ox = e.clientX - box.offsetLeft;
+        var oy = e.clientY - box.offsetTop;
+        oc.moveTo(ox, oy);
+        document.onmousemove = function (e) {
+            var ox1 = e.clientX - box.offsetLeft;
+            var oy1 = e.clientY - box.offsetTop;
+            oc.lineTo(ox1, oy1);
+            oc.stroke();
+            oc.strokeStyle = 'white';
+        };
+        document.onmouseup = function () {
+            document.onmousemove = document.onmouseup = null;
+        };
+    }
