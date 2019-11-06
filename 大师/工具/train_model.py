@@ -2,6 +2,7 @@ from tools.cnn_model import *
 import sys
 import tensorflow as tf
 
+
 tf.app.flags.DEFINE_integer(
     'batch_size',
     64,
@@ -31,7 +32,7 @@ tf.app.flags.DEFINE_float(
 )
 tf.app.flags.DEFINE_string(
     'model_dir',
-    'C:\static\model',
+    'D:\Python',
     '模型保存的目录'
 )
 tf.app.flags.DEFINE_string(
