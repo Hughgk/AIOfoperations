@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>profile</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="../../static/handwriting_calculator/jquery-2.2.4.min.js"></script>
+{#    <script src="/static/lib/markdownit.js"></script>#}
+</head>
+<body>
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+
+      <ul class="nav pull-right">
+        <li><a href="/main_page">首页</a></li>
+
+        <li><a href="/">注册</a></li>
+        <li><a href="/">登录</a></li>
+
+      </ul>
+      <a class="btn btn-navbar" id="responsive-sidebar-trigger">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+    </div>
+  </div>
+</div>
+<div id="main">
+  <div id="sidebar">
+
+  <div class="panel">
+
+    <div class="header">
+      <span class="col_fade">个人信息</span>
+    </div>
+    <div class="inner">
+      <div class="user_card">
+  <div>
+    <a class="user_avatar" href="/profile/{{ user.id }}">
+      <img src="/static/image/{{ user.user_image }}" title="{{ user.username }}">
+    </a>
+    <span class="user_name"><a class="dark" href="/profile/{{ user.id }}">{{ user.username }}</a></span>
+
+  </div>
+</div>
+
+    </div>
+
+  </div>
+
+{#{% if user.id == cuser.id %}#}
+{#  <div class="panel">#}
+{#      <div class="header">#}
+{#      <span class="col_fade">上传头像</span>#}
+{#    </div>#}
+{#    <div class="inner">#}
+{#       <form method=post action={{ url_for(".add_img") }} enctype=multipart/form-data>#}
+{#        <p><input type=file name=file>#}
+{#         <input type=submit value=Upload>#}
+{#        </form>#}
+{#    </div>#}
+{#  </div>#}
+{#      {% endif %}#}
+
+</div>
+
+
+<div id="content">
+
+  <div class="panel">
+    <div class="header">
+      <span class="col_fade">历史记录</span>
+    </div>
+      {% if topicslen == 0 %}
+        <div class="inner">
+            <p>无话题</p>
+        </div>
+        {% endif %}
+      <div class="topic_list">
+{#          {% for t in topics %}#}
+{#                    <div class="cell">#}
+{#                        <div class="topic_title_wrapper">#}
+{##}
+{#                            <a class="user_avatar pull-left">#}
+{#                                 <img src="/static/image/{{ user.user_image }}" class="user_avatar" title="{{ user.username}}">#}
+{#                            </a>#}
+{##}
+{#                            <a class="topic_title" href="{{ url_for('topic.detail', id=t.id) }}">#}
+{#                                {{ t.title }}#}
+{#                            </a>#}
+{#                            <span>评论：{{ t.replies() | count }} / 浏览：{{ t.views }}</span>#}
+{#                            <a class="topic_title" href="{{ url_for('topic.delete', id=t.id, token=token) }}">#}
+{#                                删除#}
+{#                            </a>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                    {% endfor %}#}
+
+
+      </div>
+
+{#    <div class="cell more">#}
+{#      <a class="dark" href="/user/Hughgk/topics">查看更多»</a>#}
+{#    </div>#}
+
+  </div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>
