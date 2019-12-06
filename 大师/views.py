@@ -17,12 +17,49 @@ path = static("/model/")
 
 i = 0
 
-#主界面是登录界面
-def main_page(request):
-    return render(request, "hand_writing_calculator/index.html")
+def current_user(request):
+    # 从 session 中找到 user_id 字段, 找不到就 -1
+    # 然后 User.find_by 来用 id 找用户
+    # 找不到就返回 None
+    uid = request.session.get('uid', -1)
+    print("current_user uid=",uid)
+    u = User.find_by(id=uid)
+    print("current user=",u)
+    return u
 
+
+#四则运算程序界面
+def main_page(request):
+    print("main_page=",request.session.get('uid', -1))
+    user = current_user(request)
+    if user == None :
+        #游客
+        return redirect(reverse("visitor"))
+    return render(request, "hand_writing_calculator/mainpage.html",{'user':user,'uid':user.id})
+
+#登录界面
 def index(request) :
     return render(request,"hand_writing_calculator/loginpage.html")
+
+def visitor(request):
+    request.session['uid'] = -1
+    return render(request, "hand_writing_calculator/mainpage.html",{'uid':-1})
+
+def profile(request):
+    #没有登录不能访问
+    if request.session.get('uid', -1) == -1 :
+        return redirect(reverse("index"))
+    uid = request.GET.get("id","")
+    print("profile uid=",uid)
+    request.session['uid'] = int(uid)
+    #id必须是int类型的才能找到用户
+    user = current_user(request)
+    print("user=",user.username)
+    if user == None :
+        #游客
+        return redirect(reverse("visitor"))
+    return render(request, "hand_writing_calculator/profile.html", {'user': user, 'uid': user.id})
+
 
 def save_img(img_arr: np.ndarray, file_path: str) -> None:
     global i
@@ -40,9 +77,10 @@ def login(request):
         "password": password,
 
     }
+    print("form=",form)
     u = User.validate_login(form)
     if u is None :
-        return redirect(reverse("main_page"))
+        return redirect(reverse("index"))
     else:
         # session 中写入 user_id
         print("u.id=",u.id)
